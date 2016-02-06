@@ -49,7 +49,9 @@ abstract class CommandLineUIHandler implements ChangesHandler {
 
 	protected void missingPath(Path existingPath, Path missingPath, boolean verbose) {
 		Path path = getRelativePath(missingPath);
+		Path rootForMissing = missingPath.getRoot();
 		Path missingFrom = missingPath.subpath(0, missingPath.getNameCount() - path.getNameCount());
+		if(rootForMissing != null) missingFrom = rootForMissing.resolve(missingFrom);
 		out.printf("MISSING FILE:  %s    (missing in %s)%n", path, missingFrom);
 		if(verbose) {
 			out.printf("%n    Existing:%n");
